@@ -1,0 +1,41 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model public_Accounts {
+  id                                                                         String                @id(map: "Accounts_pk") @db.Uuid
+  balance                                                                    Decimal               @db.Money
+  public_Transactions_public_AccountsTopublic_Transactions_debitedAccountId  public_Transactions[] @relation("public_AccountsTopublic_Transactions_debitedAccountId")
+  public_Transactions_public_AccountsTopublic_Transactions_creditedAccountId public_Transactions[] @relation("public_AccountsTopublic_Transactions_creditedAccountId")
+  public_Users                                                               public_Users[]
+
+  @@map("public.Accounts")
+}
+
+model public_Transactions {
+  id                                                                     String          @id(map: "Transactions_pk") @db.Uuid
+  debitedAccountId                                                       String          @db.Uuid
+  creditedAccountId                                                      String          @db.Uuid
+  value                                                                  Decimal         @db.Money
+  createdAt                                                              DateTime        @db.Date
+  public_Accounts_public_AccountsTopublic_Transactions_debitedAccountId  public_Accounts @relation("public_AccountsTopublic_Transactions_debitedAccountId", fields: [debitedAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Transactions_fk0")
+  public_Accounts_public_AccountsTopublic_Transactions_creditedAccountId public_Accounts @relation("public_AccountsTopublic_Transactions_creditedAccountId", fields: [creditedAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Transactions_fk1")
+
+  @@map("public.Transactions")
+}
+
+model public_Users {
+  id              String          @id(map: "Users_pk") @db.Uuid
+  username        String          @unique @db.VarChar(50)
+  password        String          @db.VarChar(50)
+  accountId       String          @db.Uuid
+  public_Accounts public_Accounts @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_fk0")
+
+  @@map("public.Users")
+}
