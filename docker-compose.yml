@@ -1,0 +1,36 @@
+version: '3'
+services:
+  node:
+    image: node:16-alpine
+    container_name: ng_cash_api
+    tty: true
+    stdin_open: true
+    command: sh
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ng_cash
+
+  database:
+    image: postgres:15.1-alpine3.16
+    container_name: ng_cash_db    
+    restart: always
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=ng_cash"
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+volumes:
+  pg-data:
+
