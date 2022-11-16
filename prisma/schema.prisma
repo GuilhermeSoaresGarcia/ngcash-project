@@ -9,7 +9,7 @@ datasource db {
 }
 
 model public_Accounts {
-  id                                                                         String                @id(map: "Accounts_pk") @db.Uuid
+  id                                                                         Int                   @id(map: "Accounts_pk") @default(autoincrement())
   balance                                                                    Decimal               @db.Money
   public_Transactions_public_AccountsTopublic_Transactions_debitedAccountId  public_Transactions[] @relation("public_AccountsTopublic_Transactions_debitedAccountId")
   public_Transactions_public_AccountsTopublic_Transactions_creditedAccountId public_Transactions[] @relation("public_AccountsTopublic_Transactions_creditedAccountId")
@@ -19,9 +19,9 @@ model public_Accounts {
 }
 
 model public_Transactions {
-  id                                                                     String          @id(map: "Transactions_pk") @db.Uuid
-  debitedAccountId                                                       String          @db.Uuid
-  creditedAccountId                                                      String          @db.Uuid
+  id                                                                     Int             @id(map: "Transactions_pk") @default(autoincrement())
+  debitedAccountId                                                       Int
+  creditedAccountId                                                      Int
   value                                                                  Decimal         @db.Money
   createdAt                                                              DateTime        @db.Date
   public_Accounts_public_AccountsTopublic_Transactions_debitedAccountId  public_Accounts @relation("public_AccountsTopublic_Transactions_debitedAccountId", fields: [debitedAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Transactions_fk0")
@@ -31,10 +31,10 @@ model public_Transactions {
 }
 
 model public_Users {
-  id              String          @id(map: "Users_pk") @db.Uuid
+  id              Int             @id(map: "Users_pk") @default(autoincrement())
   username        String          @unique @db.VarChar(50)
   password        String          @db.VarChar(50)
-  accountId       String          @db.Uuid
+  accountId       Int
   public_Accounts public_Accounts @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_fk0")
 
   @@map("public.Users")
