@@ -1,6 +1,6 @@
 import { public_Users } from '@prisma/client';
 import { prisma } from '../db/db';
-import { ApiError } from '../helpers/api-errors'; // This class is just an extension
+import { ApiError } from '../helpers/ApiErrors'; // This class is just an extension
 // of the default class Error but adds a second parameter in the constructor (in wich I can pass the status code)
 import { newAccount } from '../services/accountServices';
 
