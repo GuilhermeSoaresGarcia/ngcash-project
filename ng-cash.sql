@@ -1,7 +1,7 @@
 CREATE TABLE "public.Users" (
 	"id" serial NOT NULL,
 	"username" varchar(50) NOT NULL UNIQUE,
-	"password" varchar(50) NOT NULL,
+	"password" varchar(255) NOT NULL,
 	"accountId" int NOT NULL,
 	CONSTRAINT "Users_pk" PRIMARY KEY ("id")
 ) WITH (
