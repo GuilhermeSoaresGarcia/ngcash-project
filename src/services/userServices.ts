@@ -3,9 +3,10 @@ import { prisma } from '../db/db';
 import { ApiError } from '../helpers/ApiErrors'; // This class is just an extension
 // of the default class Error but adds a second parameter in the constructor (in wich I can pass the status code)
 import { newAccount } from '../services/accountServices';
+import Bcrypt from '../helpers/Bcrypt';
 
 async function newUser(obj: public_Users) {
-  const { username, password } = obj;  
+  const { username, password } = obj;
 
   // Username validation
   if (username.length < 3) {
@@ -33,7 +34,7 @@ async function newUser(obj: public_Users) {
   const result = await prisma.public_Users.create({
     data: {
       username,
-      password,
+      password: Bcrypt.encript(password),
       accountId: (await newAccount()).id,
     }
   });
