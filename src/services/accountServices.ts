@@ -12,11 +12,7 @@ async function newAccount() {
 }
 
 async function getBalance(obj: IBalance) {
-  const {id, accountId, tokenUser} = obj;
-
-  if (id !== tokenUser.id && accountId !== tokenUser.accountId) {
-    throw new ApiError ('Unauthorized', 401)
-  }
+  const { id, accountId } = obj;
 
   const result = await prisma.public_Users.findFirstOrThrow(
     {
