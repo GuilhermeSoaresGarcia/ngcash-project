@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 
-export default class Bcript {
+export default class Bcrypt {
   static encript(value: string) {
     const salt = bcrypt.genSaltSync(8);
     const hash = bcrypt.hashSync(value, salt);
