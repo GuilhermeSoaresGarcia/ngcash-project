@@ -2,7 +2,7 @@ import { public_Users } from '@prisma/client';
 import { prisma } from '../db/db';
 import { ApiError } from '../helpers/ApiErrors';
 import Bcrypt from '../helpers/Bcrypt'
-import Token from '../helpers/Token'
+import generateToken from '../helpers/tokenGeneration'
 
 async function login(obj: Partial<public_Users>) {
   const { username, password } = obj;
@@ -26,7 +26,7 @@ async function login(obj: Partial<public_Users>) {
 
   const { id, accountId } = userData;
 
-  const result = Token.generateToken({ id, accountId })
+  const result = generateToken({ id, accountId })
 
   return {token: result};
 }
