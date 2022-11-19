@@ -1,23 +1,15 @@
+import { public_Users } from '@prisma/client';
 import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
 import { Request, Response, NextFunction } from 'express';
 
-interface IToken {
-  id: number;
-  username: string;
-}
-
 export default class Token {
-  static generateToken(data: IToken) {
-    const { id, username } = data;
-    const payload = {
-      id,
-      username,
-    };
+  static generateToken(payload: Partial<public_Users>) {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
-      expiresIn: '1d',
+      expiresIn: '24h',
       algorithm: 'HS256',
     });
+    
     return token;
   }
 
