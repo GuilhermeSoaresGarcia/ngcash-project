@@ -38,7 +38,8 @@ Com isso, já é possível interagir com a aplicação utilizando algum cliente 
   | Body da requisição | Método | Endpoint |
   |--------------------|--------|----------|
   |`{` <br> `"username": "Pessoa 1",` <br> `"password": "Abc12345"` <br> `}` | POST | localhost:3000/users |
-<br><br>
+  
+  <br>
 
 #### **2. Login** (gerará o token que deverá ser usado nas demais requisições)
 <hr>
@@ -46,7 +47,8 @@ Com isso, já é possível interagir com a aplicação utilizando algum cliente 
   | Body da requisição | Método | Endpoint |
   |--------------------|--------|----------|
   |`{`<br> `"username": "Pessoa 1",` <br> `"password": "Abc12345"` <br> `}` | POST | localhost:3000/login |
-<br><br>
+
+<br>
 
 #### **3. Verificar saldo** (aqui, deve-se utilizar o token gerado no login)
 <hr>
@@ -54,7 +56,8 @@ Com isso, já é possível interagir com a aplicação utilizando algum cliente 
   | Header | Body da requisição | Método | Endpoint |
   |--------|--------------------|--------|----------|
   |Authorization: token |`{` <br> `"id": 1,` <br> `"accountId": 1` <br> `}` | GET | localhost:3000/account/balance |
-<br><br>
+
+<br>
 
 #### **4. Transferência** (aqui, deve-se utilizar o token gerado no login)
 <hr>
@@ -62,8 +65,8 @@ Com isso, já é possível interagir com a aplicação utilizando algum cliente 
   | Header | Body da requisição | Método | Endpoint |
   |--------|--------------------|--------|----------|
   |Authorization: token |`{`<br> `"id": 1`, <--- Id do usuário origem <br> `"accountId": 1,` <--- Id da conta origem <br> `"username": "Guilherme",` <--- Username do usuário destino <br> `"value": 10` <--- valor a ser creditado <br> `}`| PATCH | localhost:3000/transaction/cashout |
-<br><br>
 
+<br>
 
 # Considerações finais e observações:
 - Nunca havia utilizado Postgres. Em razão disso, acabei optando por um ORM (aqui, cabe uma ressalva que li em diversos lugares - e mesmo na documenteção da própria ferramenta - que talvez o Prisma não seja de fato um ORM, mas enfim... ) que eu também nunca havia utilizado: o Prisma. Gostei bastante de utilizar ambos e como primeira contato, fiquei feliz com o resultado;
