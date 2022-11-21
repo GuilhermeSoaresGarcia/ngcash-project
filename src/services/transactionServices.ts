@@ -3,8 +3,9 @@ import { ApiError } from '../helpers/ApiErrors';
 
 async function cashOut(obj: any) {
   const { accountId, username, value } = obj;
-
-  if (value <= 0) {
+  
+  // Throw error in case that user insert zero or a negative value
+  if (value <= 0) { 
     throw new ApiError('Value must be greater than 0', 403)
   }
 
@@ -14,6 +15,7 @@ async function cashOut(obj: any) {
     }
   })
 
+  // Throw error if the origin account have insufficient funds
   if (originAccount && originAccount.balance < value) {
     throw new ApiError('Insufficient Funds', 403)
   }
@@ -24,10 +26,12 @@ async function cashOut(obj: any) {
     }
   })
 
+  // Throw error if the destination username isn't found
   if (destinationUsername === null) {
     throw new ApiError(`Username ${username} could not be found`, 404);
   }
 
+  // Throw error if the origin account is the same as the destination
   if (destinationUsername?.accountId === accountId) {
     throw new ApiError(`Origin and destination account cannot be the same`, 401);
   }
